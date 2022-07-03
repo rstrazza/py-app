@@ -1,7 +1,7 @@
 FROM python:3.10-slim-buster
 
-RUN apt update && \
-    apt install curl -y && \
+RUN apt-get update && \
+    apt-get install curl -y && \
     /usr/local/bin/python -m pip install --upgrade pip
 
 WORKDIR /app

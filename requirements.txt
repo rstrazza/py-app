@@ -1,1 +1,4 @@
+boto3==1.24.22
 flask==2.1.2
+aws-xray-sdk==2.10.0
+requests==2.28.1

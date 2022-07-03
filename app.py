@@ -1,25 +1,48 @@
 import socket
 from logging.config import fileConfig
 
+import boto3
+import requests
+from aws_xray_sdk.core import xray_recorder, patch_all
+from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
 from flask import Flask
 
 app = Flask(__name__)
 
 fileConfig('logging.conf')
 
+xray_recorder.configure(service='py-app')
+XRayMiddleware(app, xray_recorder)
+patch_all()
+
 
 @app.route('/')
-def base():
-    app.logger.info('Ping')
-    return "OK"
+def default():
+    app.logger.info('healthcheck')
+    return "healthcheck"
 
 
 @app.route('/ip')
-def get_ip():
+def ipAddress():
     hostname = socket.gethostname()
     ipaddress = socket.gethostbyname(hostname)
     app.logger.info('Hostname %s IP Address is %s', hostname, ipaddress)
     return ipaddress
+
+
+# test http instrumentation
+@app.route('/outgoing-http-call')
+def callHTTP():
+    resp = requests.get("https://aws.amazon.com")
+    return "Ok! tracing outgoing http call. Resp: %s" % resp.url
+
+
+# test aws sdk instrumentation
+@app.route('/aws-sdk-call')
+def callAWSSDK():
+    client = boto3.client('s3')
+    client.list_buckets()
+    return 'Ok! tracing aws sdk call'
 
 
 if __name__ == '__main__':
