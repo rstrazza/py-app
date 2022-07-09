@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: py-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: py-app
+  template:
+    metadata:
+      labels:
+        app: py-app
+    spec:
+      containers:
+        - image: docker.io/rstrazza/py-app
+          name: py-app
+          ports:
+            - containerPort: 5000
+              name: http-web-svc
+          env:
+            - name: AWS_XRAY_DAEMON_ADDRESS
+              value: xray-service.xray-system.svc.cluster.local:2000
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 500m
+              memory: 512Mi
