@@ -5,7 +5,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: py-app.eks.strazza.dev
+  - host: py-app-dev.eks.strazza.dev
     http:
       paths:
       - path: /
