@@ -5,6 +5,12 @@ Simple Python App
 
 * [podman](https://podman.io/)
 
+## Running local
+
+```shell
+python3 app.py
+```
+
 ## Endpoints
 
 * `/` simple healthcheck

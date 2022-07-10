@@ -34,7 +34,7 @@ def ipAddress():
 @app.route('/outgoing-http-call')
 def callHTTP():
     resp = requests.get("https://aws.amazon.com")
-    app.logger.info('Outgoing HTTP call to %s with status code', resp.url, resp.status_code)
+    app.logger.info('Outgoing HTTP call to %s with status code %s', resp.url, resp.status_code)
     return "Ok! tracing outgoing http call. Resp: %s" % resp.url
 
 
