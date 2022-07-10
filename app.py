@@ -34,6 +34,7 @@ def ipAddress():
 @app.route('/outgoing-http-call')
 def callHTTP():
     resp = requests.get("https://aws.amazon.com")
+    app.logger.info('Outgoing HTTP call to %s with status code', resp.url, resp.status_code)
     return "Ok! tracing outgoing http call. Resp: %s" % resp.url
 
 
@@ -42,6 +43,7 @@ def callHTTP():
 def callAWSSDK():
     client = boto3.client('s3')
     client.list_buckets()
+    app.logger.info('Call to list s3 buckets')
     return 'Ok! tracing aws sdk call'
 
 
