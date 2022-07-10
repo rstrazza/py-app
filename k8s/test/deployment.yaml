@@ -13,7 +13,7 @@ spec:
         app: py-app
     spec:
       containers:
-        - image: docker.io/rstrazza/py-app
+        - image: docker.io/rstrazza/py-app:sha-e11d7f6
           name: py-app
           ports:
             - containerPort: 5000
