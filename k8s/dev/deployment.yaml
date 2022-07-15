@@ -18,6 +18,18 @@ spec:
           ports:
             - containerPort: 5000
               name: http-web-svc
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 15
+            periodSeconds: 20
           env:
             - name: AWS_XRAY_DAEMON_ADDRESS
               value: xray-service.xray-system.svc.cluster.local:2000
